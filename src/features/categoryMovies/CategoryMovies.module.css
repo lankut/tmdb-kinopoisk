@@ -1,0 +1,27 @@
+.container {
+    padding: 0 40px;
+}
+
+.wrapper_movies {
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.title {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+.item {
+    display: flex;
+}
+
+.description {
+    margin-left: 30px;
+}
+
+.size_movies {
+    width: 250px;
+}

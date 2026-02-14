@@ -1,0 +1,30 @@
+.wrapper {
+    padding: 0 40px;
+}
+
+.title {
+    margin-bottom: 10px;
+}
+
+.wrapper_movies {
+    display: flex;
+    justify-content: space-between;
+    overflow-x: auto;
+    position: relative;
+}
+
+.size_movies {
+    width: 150px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.button {
+    position: absolute;
+    width: 250px;
+    height: 40px;
+    border-radius: 20px;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    /*border: 1px solid red;*/
+    height: 56px;
+    padding: 0 40px;
+    background-color: rgb(3, 37, 65);
+}
+

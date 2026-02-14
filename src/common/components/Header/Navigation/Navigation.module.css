@@ -1,0 +1,15 @@
+.items {
+    display: flex;
+    gap: 30px
+
+}
+
+.item {
+    list-style: none;
+}
+
+.link {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+}
