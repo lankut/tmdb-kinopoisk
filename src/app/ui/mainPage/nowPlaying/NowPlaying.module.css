@@ -1,10 +1,11 @@
+
 .wrapper {
     display: flex;
-    flex-direction: column;
     padding-left: 40px;
+    flex-direction: column;
 }
 
-.wrapper_topRated {
+.wrapper_now_playing {
     display: flex;
     gap: 10px;
     overflow-x: auto;

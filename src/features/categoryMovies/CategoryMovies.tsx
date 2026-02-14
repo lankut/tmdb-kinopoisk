@@ -2,8 +2,8 @@ import {useAppSelector} from "@/common/hooks";
 import {selectPopularMovies} from "@/app/model/appSlice.ts";
 import s from './CategoryMovies.module.css'
 
-
 export const CategoryMovies = () => {
+
     const popularMovies = useAppSelector(selectPopularMovies);
 
     return (
@@ -21,14 +21,15 @@ export const CategoryMovies = () => {
                                 />
                             )}
                             <div className={s.description}>
-                                <div style={{fontWeight: 'bold'}}>{movie.title}</div>
+                                <div
+                                    style={{fontWeight: 'bold'}}>{movie.title}</div>
                                 <div>{movie.release_date}</div>
                                 <div>{movie.overview}</div>
                             </div>
                         </div>
                     ))
                 ) : (
-                    <span>Загрузки фильмов или данных нет</span>
+                    <span>Загрузка фильмов или данных нет</span>
                 )}
             </div>
         </div>

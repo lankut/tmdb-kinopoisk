@@ -4,6 +4,7 @@ import {useAppDispatch} from "@/common/hooks";
 import {useNavigate} from "react-router";
 import {setPopularMovies} from "@/app/model/appSlice.ts";
 import {Path} from "@/common/routing";
+import {useEffect} from "react";
 
 
 type Props = {
@@ -15,11 +16,15 @@ export const PopularMovies = ({popularMovies}: Props) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const onViewMore = () => {
+    useEffect(() => {
         if (popularMovies) {
             dispatch(setPopularMovies(popularMovies))
-            navigate(Path.CategoryMovies)
         }
+
+    }, [popularMovies, dispatch])
+
+    const onViewMore = () => {
+        navigate(Path.CategoryMovies)
     }
 
     return (

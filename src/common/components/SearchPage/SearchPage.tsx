@@ -1,8 +1,8 @@
-import {useFetchMoviesSearchQuery} from "@/app/api/baseApi.ts";
 import {useAppSelector} from "@/common/hooks";
 import {selectResultSearch} from "@/app/model/appSlice.ts";
 import type {FormDataSearch} from "@/common/types/types.ts";
 import s from './SearchPage.module.css'
+import {useFetchMoviesSearchQuery} from "@/app/api/moviesSearchApi.ts";
 
 export const SearchPage = () => {
 
@@ -26,11 +26,12 @@ export const SearchPage = () => {
                 (data.results.map((movie) => (
                         <div key={movie.id} className={s.wrapper}>
                             <img className={s.poster}
-                                src={`${import.meta.env.VITE_IMAGE_URL}${movie.poster_path}`}
-                                alt={movie.title}/>
+                                 src={`${import.meta.env.VITE_IMAGE_URL}${movie.poster_path}`}
+                                 alt={movie.title}/>
                             <div className={s.description}>
-                                <div style={{fontWeight: 'bold'}}> {movie.title}</div>
-                                <div > {movie.overview}</div>
+                                <div
+                                    style={{fontWeight: 'bold'}}> {movie.title}</div>
+                                <div> {movie.overview}</div>
 
                             </div>
 
