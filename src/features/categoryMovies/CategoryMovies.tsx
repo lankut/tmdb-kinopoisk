@@ -1,10 +1,9 @@
-import {useAppSelector} from "@/common/hooks";
-import {selectPopularMovies} from "@/app/model/appSlice.ts";
 import s from './CategoryMovies.module.css'
+import {useFetchMoviesPopularQuery} from "@/app/api/popularMoviApi.ts";
 
 export const CategoryMovies = () => {
 
-    const popularMovies = useAppSelector(selectPopularMovies);
+    const {data: popularMovies} = useFetchMoviesPopularQuery()
 
     return (
         <div className={s.container}>

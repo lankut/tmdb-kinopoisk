@@ -15,9 +15,21 @@ export type Movie = {
     vote_count: number;
 };
 
+export type Dates = {
+    maximum: string;
+    minimum: string;
+}
+
 export type MovieResponse = {
+    dates?: Dates;
     page: number;
     results: Movie[];
     total_pages: number;
     total_results: number;
+}
+
+export type MovieWithFavorite = Movie & { isFavorite?: boolean }
+
+export type MovieResponseWithMovieFavorite = MovieResponse & {
+    results: MovieWithFavorite[];
 }

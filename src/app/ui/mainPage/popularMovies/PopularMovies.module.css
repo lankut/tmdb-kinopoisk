@@ -1,16 +1,17 @@
 .wrapper {
     padding: 0 40px;
+    position: relative;
 }
 
 .title {
     margin-bottom: 10px;
+
 }
 
 .wrapper_movies {
     display: flex;
     justify-content: space-between;
     overflow-x: auto;
-    position: relative;
 }
 
 .size_movies {
@@ -21,10 +22,65 @@
 
 .button {
     position: absolute;
-    width: 250px;
+    width: 100px;
     height: 40px;
     border-radius: 20px;
-    top: 75%;
-    left: 50%;
+    top: 4%;
+    left: 91%;
     transform: translate(-50%, -50%);
+    background-color: rgb(3, 37, 65);
+    border: none;
+    color: white;
+}
+
+.image {
+    position: relative;
+}
+
+.badge {
+    position: absolute;
+    padding: 5px 10px;
+    border-radius: 20px;
+    color: black;
+    font-family: sans-serif;
+    font-weight: bold;
+    display: inline-block;
+    top: 70%;
+    left: 65%;
+}
+
+.favButton {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    background-color: rgba(255,255,255,0.7);
+    /*background: none;*/
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    transition: transform 0.2s ease-in-out;
+    padding: 5px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.favButton:hover {
+    background-color: #f0f0f0;
+}
+
+.favButton:active {
+    transform: scale(0.9);
+}
+
+.favButton.active .heartIcon {
+    animation: heartBeat 0.5s ease-in-out;
+}
+
+@keyframes heartBeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
 }

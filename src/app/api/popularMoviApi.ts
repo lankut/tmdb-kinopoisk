@@ -1,13 +1,25 @@
 import {baseApi} from "@/app/api/baseApi.ts";
-import type {MovieResponse} from "@/app/api/type.ts";
+import type {
+    MovieResponse,
+    MovieResponseWithMovieFavorite
+} from "@/app/api/type.ts";
+
 
 export const popularMoviesApi = baseApi.injectEndpoints({
     endpoints: build => ({
-        fetchMoviesPopular: build.query<MovieResponse, void>({
+        fetchMoviesPopular: build.query<MovieResponseWithMovieFavorite, void>({
             query: () => ({
                 url: 'movie/popular'
             }),
-            providesTags: ['tmdbApi']
+            transformResponse: (response: MovieResponse): MovieResponseWithMovieFavorite => ({
+                ...response,
+                results: response
+                    .results
+                    .map((movie) => ({
+                        ...movie, isFavorite: false
+                    }))
+            }),
+            providesTags: ['tmdbApi'],
         }),
     })
 })
