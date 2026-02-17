@@ -1,5 +1,5 @@
 import s from './CategoryMovies.module.css'
-import {useFetchMoviesPopularQuery} from "@/app/api/popularMoviApi.ts";
+import {useFetchMoviesPopularQuery} from "@/app/api/moviesApi.ts";
 
 export const CategoryMovies = () => {
 

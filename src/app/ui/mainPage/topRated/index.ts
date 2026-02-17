@@ -1,1 +1,0 @@
-export {TopRated} from './TopRated.tsx'

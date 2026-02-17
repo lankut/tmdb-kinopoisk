@@ -3,6 +3,7 @@ import {NavLink} from "react-router";
 import s from './Navigation.module.css'
 
 const navItems = [
+    {to: Path.MainPage, label: 'Main'},
     {to: Path.CategoryMovies, label: 'Category Movies'},
     {to: Path.FilteredMovies, label: 'Filtered Movies'},
     {to: Path.Search, label: 'SearchPage'},

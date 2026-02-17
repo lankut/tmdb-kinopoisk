@@ -1,0 +1,16 @@
+.wrapper {
+    padding: 0 40px;
+}
+
+.wrapper_movie {
+    display: flex;
+    gap: 20px
+}
+
+.h2 {
+    margin-bottom: 10px;
+}
+
+.title {
+font-weight: bold;
+}

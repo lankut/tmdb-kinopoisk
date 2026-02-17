@@ -1,14 +1,9 @@
-.container {
+.footer {
+    margin-top: 10px;
     display: flex;
-
-}
-
-.wrapper {
-    display: flex;
+    justify-content: center;
     align-items: center;
-    /*border: 1px solid red;*/
     height: 60px;
-    padding: 0 40px;
     background-color: var(--primary-color);
+    color: white;
 }
-

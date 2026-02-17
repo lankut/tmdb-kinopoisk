@@ -1,30 +1,31 @@
 import s from './MainPage.module.css'
-import {useMemo} from "react";
 import {Backdrops} from "@/app/ui/mainPage/backdrops";
-import {PopularMovies} from "@/app/ui/mainPage/popularMovies";
-import {getRandomSubset} from "@/common/utils/getRandomSubset.ts";
-import {Upcoming} from "@/app/ui/mainPage/upcoming";
-import {NowPlaying} from "@/app/ui/mainPage/nowPlaying";
-import {TopRated} from "@/app/ui/mainPage/topRated";
-import {useFetchMoviesPopularQuery} from "@/app/api/popularMoviApi.ts";
-
+import {Movies} from "@/common/components/Movies";
+import {
+    useFetchMoviesNowPlayingQuery,
+    useFetchMoviesPopularQuery,
+    useFetchMoviesTopRatedQuery,
+    useFetchMoviesUpcomingQuery
+} from "@/app/api/moviesApi.ts";
 
 export const MainPage = () => {
 
     const {data: popularMovies} = useFetchMoviesPopularQuery()
-
-    const fiveMovies = useMemo(() => {
-        const allFilms = popularMovies?.results || [];
-        return getRandomSubset(allFilms, 5);
-    }, [popularMovies]);
+    const {data: topRatedMovies} = useFetchMoviesTopRatedQuery()
+    const {data: upcomingMovies} = useFetchMoviesUpcomingQuery()
+    const {data: nowPlayingMovies} = useFetchMoviesNowPlayingQuery()
 
     return (
         <div className={s.wrapper}>
-            <Backdrops fiveMovies={fiveMovies}/>
-            <PopularMovies popularMovies={popularMovies}/>
-            <TopRated/>
-            <Upcoming/>
-            <NowPlaying/>
+            <Backdrops popularMovies={popularMovies}/>
+            <Movies movies={popularMovies} queryKey={'fetchMoviesPopular'}
+                    title={'Popular Movies'}/>
+            <Movies movies={topRatedMovies} queryKey={'fetchMoviesTopRated'}
+                    title={'Top Rated Movies'}/>
+            <Movies movies={upcomingMovies} queryKey={'fetchMoviesUpcoming'}
+                    title={'Upcoming Movies'}/>
+            <Movies movies={nowPlayingMovies} queryKey={'fetchMoviesNowPlaying'}
+                    title={'Now Playing Movies'}/>
         </div>
     );
 };

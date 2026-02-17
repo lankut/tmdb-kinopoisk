@@ -1,23 +1,33 @@
 .wrapper {
-    padding: 0 40px;
+    padding: 10px 40px;
     position: relative;
 }
 
 .title {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+}
 
+.title_movie {
+    text-align: center;
+    font-weight: bold;
+    height: 48px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .wrapper_movies {
     display: flex;
-    justify-content: space-between;
-    overflow-x: auto;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .size_movies {
-    width: 150px;
-    height: auto;
     border-radius: 10px;
+    width: 180px;
+    height: 225px;
+    object-fit: cover;
 }
 
 .button {
@@ -25,16 +35,20 @@
     width: 100px;
     height: 40px;
     border-radius: 20px;
-    top: 4%;
+    top: 8%;
     left: 91%;
     transform: translate(-50%, -50%);
-    background-color: rgb(3, 37, 65);
+    background-color: var(--primary-color);
     border: none;
     color: white;
 }
 
 .image {
+    width: 180px;
+    display: flex;
+    flex-direction: column;
     position: relative;
+    cursor: pointer;
 }
 
 .badge {
@@ -45,7 +59,7 @@
     font-family: sans-serif;
     font-weight: bold;
     display: inline-block;
-    top: 70%;
+    top: 68%;
     left: 65%;
 }
 
@@ -54,7 +68,7 @@
     top: 10px;
     left: 10px;
     z-index: 2;
-    background-color: rgba(255,255,255,0.7);
+    background-color: rgba(255, 255, 255, 0.7);
     /*background: none;*/
     border: none;
     cursor: pointer;
@@ -80,7 +94,13 @@
 }
 
 @keyframes heartBeat {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
