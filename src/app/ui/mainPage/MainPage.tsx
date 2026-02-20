@@ -19,13 +19,13 @@ export const MainPage = () => {
         <div className={s.wrapper}>
             <Backdrops popularMovies={popularMovies}/>
             <Movies movies={popularMovies} queryKey={'fetchMoviesPopular'}
-                    title={'Popular Movies'}/>
+                    title={'Popular Movies'} route={'popular'}/>
             <Movies movies={topRatedMovies} queryKey={'fetchMoviesTopRated'}
-                    title={'Top Rated Movies'}/>
+                    title={'Top Rated Movies'} route={'top_rated'}/>
             <Movies movies={upcomingMovies} queryKey={'fetchMoviesUpcoming'}
-                    title={'Upcoming Movies'}/>
+                    title={'Upcoming Movies'} route={'upcoming'}/>
             <Movies movies={nowPlayingMovies} queryKey={'fetchMoviesNowPlaying'}
-                    title={'Now Playing Movies'}/>
+                    title={'Now Playing Movies'} route={'now_playing'}/>
         </div>
     );
 };

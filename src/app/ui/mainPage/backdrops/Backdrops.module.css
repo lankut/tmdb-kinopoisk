@@ -51,6 +51,10 @@
     margin-left: 10px;
 }
 
+.button_backdrops:hover {
+    background-color: var(--selected-color);
+}
+
 .search {
     display: flex;
 }

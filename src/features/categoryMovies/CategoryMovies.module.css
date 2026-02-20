@@ -1,27 +1,41 @@
-.container {
-    padding: 0 40px;
-}
-
-.wrapper_movies {
+.wrapper_category {
     display: flex;
     flex-direction: column;
-    gap: 20px
-}
-
-.title {
-    display: flex;
-    margin-bottom: 10px;
     justify-content: center;
 }
 
-.item {
+.wrapper_link {
+    padding: 30px 0;
     display: flex;
+    gap: 30px;
+    justify-content: center;
 }
 
-.description {
-    margin-left: 30px;
+.container_category {
+    max-width: 1425px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.size_movies {
-    width: 250px;
+.link {
+    height: 45px;
+    width: 200px;
+    border-radius: 50px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.link:hover {
+    background-color: var(--selected-color);
+}
+
+.active {
+    background-color: var(--selected-color);
 }

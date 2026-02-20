@@ -1,6 +1,8 @@
 .wrapper {
     padding: 10px 40px;
     position: relative;
+    /*display: flex;*/
+    /*justify-content: center;*/
 }
 
 .title {
@@ -19,14 +21,17 @@
 
 .wrapper_movies {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
+
+    /*justify-content: space-between;*/
 }
 
 .size_movies {
     border-radius: 10px;
     width: 180px;
-    height: 225px;
+    height: auto;
     object-fit: cover;
 }
 
@@ -41,6 +46,10 @@
     background-color: var(--primary-color);
     border: none;
     color: white;
+}
+
+.button:hover {
+    background-color: var(--selected-color);
 }
 
 .image {

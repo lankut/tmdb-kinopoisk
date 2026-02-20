@@ -4,7 +4,6 @@ import type {
     MovieWithFavorite
 } from "@/app/api/typesApi.ts";
 import {useNavigate} from "react-router";
-import {Path} from "@/common/routing";
 import {getPercentAndColor} from "@/common/utils/getPercentAndColor.ts";
 import {useAppDispatch} from "@/common/hooks";
 import {type EndpointKeys, moviesApi} from "@/app/api/moviesApi.ts";
@@ -17,6 +16,9 @@ type Props = {
     title?: string
     showButton?: boolean
     showAll?: boolean
+    widthImage?: string
+    justifyContent?: string
+    route?: string
 };
 
 export const Movies = ({
@@ -25,6 +27,9 @@ export const Movies = ({
                            title,
                            showButton = true,
                            showAll = false,
+                           widthImage,
+                           justifyContent = 'space-between',
+                           route,
                        }: Props) => {
 
     const dispatch = useAppDispatch();
@@ -33,7 +38,7 @@ export const Movies = ({
     const displayedMovies = showAll ? movies?.results : movies?.results.slice(0, 6)
 
     const onViewMore = () => {
-        navigate(Path.CategoryMovies) //тоже подправить разные категории
+        navigate(`/category_movies/${route}`)
     }
     const toggleFavorite = (movieId: number) => {
         dispatch(
@@ -53,16 +58,19 @@ export const Movies = ({
     return (
         <div className={s.wrapper}>
             <h2 className={s.title}>{title}</h2>
-            <div className={s.wrapper_movies}>
+            <div style={{justifyContent: justifyContent}}
+                 className={s.wrapper_movies}>
                 {displayedMovies?.map((movie: MovieWithFavorite) => {
                         const {
                             percent,
                             backgroundColor
                         } = getPercentAndColor(movie.vote_average)
 
-                        return <div key={movie.id} className={s.image}>
+                        return <div key={movie.id} style={{width: widthImage}}
+                                    className={s.image}>
                             {movie.id && (
-                                <img className={s.size_movies}
+                                <img style={{width: widthImage}}
+                                     className={s.size_movies}
                                      src={movie.poster_path
                                          ? `${import.meta.env.VITE_IMAGE_URL}${movie.poster_path}`
                                          : noPosterAvailable

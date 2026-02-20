@@ -1,5 +1,6 @@
 import {baseApi} from "@/app/api/baseApi.ts";
 import type {
+    FilmFilters,
     MovieResponse,
     MovieResponseWithMovieFavorite
 } from "@/app/api/typesApi.ts";
@@ -78,6 +79,33 @@ export const moviesApi = baseApi.injectEndpoints({
             }),
             providesTags: ['tmdbApi']
         }),
+        fetchMoviesFiltered: build.query<MovieResponseWithMovieFavorite, FilmFilters | void>({
+            query: (filters) => {
+                if (filters) {
+                    const {
+                        sort_by, vote_average_gte, vote_average_lte,
+                        page, primary_release_date, original_title, with_genres
+                    } = filters
+                    const params = new URLSearchParams()
+                    if (with_genres) params.append('with_genres', with_genres.toString())
+                    if (sort_by) params.append('sort_by', sort_by)
+
+                    return `https://api.themoviedb.org/3/discover/movie?${params.toString()}`
+                }
+
+                return `https://api.themoviedb.org/3/discover/movie`
+            },
+            transformResponse: (response: MovieResponse): MovieResponseWithMovieFavorite => ({
+                ...response,
+                results: response
+                    .results
+                    .map((movie) => ({
+                        ...movie, isFavorite: false
+                    }))
+            }),
+            providesTags: ['tmdbApi']
+        }),
+
     })
 })
 
@@ -88,7 +116,7 @@ export const {
     useFetchMoviesUpcomingQuery,
     useFetchMoviesNowPlayingQuery,
     useFetchMoviesSearchQuery,
-
+    useFetchMoviesFilteredQuery
 } = moviesApi
 
 export type moviesApiType = typeof moviesApi;

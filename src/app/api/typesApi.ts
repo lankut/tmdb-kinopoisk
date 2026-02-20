@@ -33,3 +33,13 @@ export type MovieWithFavorite = Movie & { isFavorite?: boolean }
 export type MovieResponseWithMovieFavorite = MovieResponse & {
     results: MovieWithFavorite[];
 }
+
+export type FilmFilters = {
+    sort_by?: string; //popularity.asc   popularity.desc
+    vote_average_gte?: number; //gte desc asc
+    vote_average_lte?: number; //lte
+    page?: number;
+    primary_release_date?: string;  //desc asc
+    original_title?: string; //asc desc
+    with_genres?: number| number[]; //288
+}

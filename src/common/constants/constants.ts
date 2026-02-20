@@ -1,1 +1,1 @@
-export const noPosterAvailable = 'https://placehold.co/180x375?text=No Poster Available'
+export const noPosterAvailable = 'https://placehold.co/180x270?text=No Poster Available'
