@@ -35,11 +35,11 @@ export type MovieResponseWithMovieFavorite = MovieResponse & {
 }
 
 export type FilmFilters = {
-    sort_by?: string; //popularity.asc   popularity.desc
-    vote_average_gte?: number; //gte desc asc
-    vote_average_lte?: number; //lte
-    page?: number;
-    primary_release_date?: string;  //desc asc
-    original_title?: string; //asc desc
-    with_genres?: number| number[]; //288
+    sort_by?: string
+    vote_average_gte?: number
+    vote_average_lte?: number
+    primary_release_date?: string
+    original_title?: string
+    with_genres?: number[] | undefined
+    page?: number
 }

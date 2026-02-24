@@ -10,22 +10,34 @@ import {
 
 export const MainPage = () => {
 
-    const {data: popularMovies} = useFetchMoviesPopularQuery()
-    const {data: topRatedMovies} = useFetchMoviesTopRatedQuery()
-    const {data: upcomingMovies} = useFetchMoviesUpcomingQuery()
-    const {data: nowPlayingMovies} = useFetchMoviesNowPlayingQuery()
+    const {data: popularMovies} = useFetchMoviesPopularQuery(null)
+    const {data: topRatedMovies} = useFetchMoviesTopRatedQuery(null)
+    const {data: upcomingMovies} = useFetchMoviesUpcomingQuery(null)
+    const {data: nowPlayingMovies} = useFetchMoviesNowPlayingQuery(null)
 
     return (
         <div className={s.wrapper}>
             <Backdrops popularMovies={popularMovies}/>
-            <Movies movies={popularMovies} queryKey={'fetchMoviesPopular'}
-                    title={'Popular Movies'} route={'popular'}/>
-            <Movies movies={topRatedMovies} queryKey={'fetchMoviesTopRated'}
-                    title={'Top Rated Movies'} route={'top_rated'}/>
-            <Movies movies={upcomingMovies} queryKey={'fetchMoviesUpcoming'}
-                    title={'Upcoming Movies'} route={'upcoming'}/>
-            <Movies movies={nowPlayingMovies} queryKey={'fetchMoviesNowPlaying'}
-                    title={'Now Playing Movies'} route={'now_playing'}/>
+            <div className={s.container_movies}>
+                <Movies movies={popularMovies} queryKey={'fetchMoviesPopular'}
+                        title={'Popular Movies'} route={'popular'}
+                        queryArgs={null}
+                />
+                <Movies movies={topRatedMovies} queryKey={'fetchMoviesTopRated'}
+                        title={'Top Rated Movies'} route={'top_rated'}
+                        queryArgs={null}
+                />
+                <Movies movies={upcomingMovies} queryKey={'fetchMoviesUpcoming'}
+                        title={'Upcoming Movies'} route={'upcoming'}
+                        queryArgs={null}
+                />
+                <Movies movies={nowPlayingMovies}
+                        queryKey={'fetchMoviesNowPlaying'}
+                        title={'Now Playing Movies'} route={'now_playing'}
+                        queryArgs={null}
+                />
+            </div>
+
         </div>
     );
 };

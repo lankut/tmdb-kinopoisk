@@ -1,13 +1,3 @@
-.wrapper {
-    display: flex;
-    padding: 0 40px;
-}
-
-.poster {
-    width: 250px;
-    margin-bottom: 10px;
-}
-
-.description {
-    padding-left: 15px;
+.clue {
+    padding-left: 40px;
 }

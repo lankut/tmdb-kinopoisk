@@ -1,5 +1,6 @@
 import s from './Movies.module.css';
 import type {
+    FilmFilters,
     MovieResponseWithMovieFavorite,
     MovieWithFavorite
 } from "@/app/api/typesApi.ts";
@@ -8,6 +9,9 @@ import {getPercentAndColor} from "@/common/utils/getPercentAndColor.ts";
 import {useAppDispatch} from "@/common/hooks";
 import {type EndpointKeys, moviesApi} from "@/app/api/moviesApi.ts";
 import {noPosterAvailable} from "@/common/constants/constants.ts";
+import {Pagination} from "@mui/material";
+import {type ChangeEvent} from "react";
+import type {FormDataSearch} from "@/common/types/types.ts";
 
 
 type Props = {
@@ -19,6 +23,11 @@ type Props = {
     widthImage?: string
     justifyContent?: string
     route?: string
+    setPage?: (pageNumber: number) => void
+    page?: number
+    filters?: FilmFilters
+    setFilters?: (filters: FilmFilters) => void
+    queryArgs: null | string | FilmFilters | undefined | FormDataSearch
 };
 
 export const Movies = ({
@@ -30,7 +39,13 @@ export const Movies = ({
                            widthImage,
                            justifyContent = 'space-between',
                            route,
+                           setPage,
+                           page,
+                           filters,
+                           setFilters,
+                           queryArgs,
                        }: Props) => {
+
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -40,19 +55,47 @@ export const Movies = ({
     const onViewMore = () => {
         navigate(`/category_movies/${route}`)
     }
-    const toggleFavorite = (movieId: number) => {
+    const toggleFavorite = (favorite: {
+        movieId: number,
+        title: string,
+        posterUrl: string,
+        voteAverage: number
+    }) => {
         dispatch(
-            moviesApi.util.updateQueryData(queryKey, undefined, (draft) => {
-                const movie = draft.results.find((movie: MovieWithFavorite) => movie.id === movieId);
+            moviesApi.util.updateQueryData(queryKey, queryArgs, (draft) => {
+                const movie = draft.results.find((movie: MovieWithFavorite) => movie.id === favorite.movieId);
                 if (movie) {
                     movie.isFavorite = !movie.isFavorite;
                 }
             })
         );
+        const storageKey = `movieId_${favorite.movieId}`
+        const existing = localStorage.getItem(storageKey)
+
+        if (existing) {
+            localStorage.removeItem(storageKey)
+        } else {
+            const favoriteItem = {
+                movieId: favorite.movieId,
+                title: favorite.title,
+                posterUrl: favorite.posterUrl,
+                voteAverage: favorite.voteAverage,
+            }
+            localStorage.setItem(storageKey, JSON.stringify(favoriteItem))
+        }
     }
 
     const onClick = (movieId: number) => {
         navigate(`/details/${movieId}`)
+    }
+
+    const onChangePage = (_event: ChangeEvent<unknown>, value: number) => {
+        if (filters && setFilters) {
+            setFilters({...filters, page: value})
+        }
+        if (setPage) {
+            setPage(value)
+        }
     }
 
     return (
@@ -65,7 +108,6 @@ export const Movies = ({
                             percent,
                             backgroundColor
                         } = getPercentAndColor(movie.vote_average)
-
                         return <div key={movie.id} style={{width: widthImage}}
                                     className={s.image}>
                             {movie.id && (
@@ -84,9 +126,13 @@ export const Movies = ({
                                 className={s.badge}>{percent}%</span>
                             <button
                                 className={`${s.favButton} ${movie.isFavorite ? s.active : ''}`}
-                                onClick={() => toggleFavorite(movie.id)}>
-                                <span
-                                    className={s.heartIcon}>{movie.isFavorite ? '❤️' : '🤍'}</span>
+                                onClick={() => toggleFavorite({
+                                    movieId: movie.id,
+                                    title: movie.title,
+                                    posterUrl: movie.poster_path,
+                                    voteAverage: movie.vote_average
+                                })}>
+                                <span className={s.heartIcon}>{movie.isFavorite ? '❤️' : '🤍'}</span>
                             </button>
                         </div>
                     }
@@ -97,8 +143,12 @@ export const Movies = ({
                         More
                     </button>
                 }
-
             </div>
+            {(setPage || setFilters) &&
+                <Pagination page={page} count={movies?.total_pages}
+                            variant="outlined"
+                            shape="rounded"
+                            onChange={onChangePage}/>}
         </div>
 
     );

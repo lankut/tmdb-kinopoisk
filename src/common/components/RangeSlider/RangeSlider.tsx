@@ -1,25 +1,27 @@
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import {useState} from "react";
 
 function valuetext(value: number) {
-    return `${value}`;
+    return `${value/10}`;
 }
 
-export const RangeSlider = () => {
-    const [value, setValue] = useState<number[]>([0, 10]);
+type Props ={
+    handleRageChange: (val: number[]) => void,
+    value: number[],
+}
 
+export const RangeSlider = ({handleRageChange, value}:Props) => {
     const handleChange = (_event: Event, newValue: number[]) => {
-        setValue(newValue);
+        handleRageChange(newValue);
     };
 
     return (
         <Box sx={{width: 250}}>
             <Slider
                 getAriaLabel={() => 'Range'}
-                value={value}
+                value={[value[0]*10, value[1]*10]}
                 onChange={handleChange}
-                valueLabelDisplay="auto"
+                valueLabelDisplay="off"
                 getAriaValueText={valuetext}
             />
         </Box>

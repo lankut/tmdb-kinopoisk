@@ -1,6 +1,5 @@
 :root {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-    box-sizing: border-box;
     --primary-color: rgb(3, 37, 65);;
     --selected-color: rgb(212, 175, 55);;
 }

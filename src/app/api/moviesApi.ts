@@ -9,72 +9,75 @@ import type {FormDataSearch} from "@/common/types/types.ts";
 
 export const moviesApi = baseApi.injectEndpoints({
     endpoints: build => ({
-        fetchMoviesPopular: build.query<MovieResponseWithMovieFavorite, void>({
-            query: () => ({
-                url: '/popular'
+        fetchMoviesPopular: build.query<MovieResponseWithMovieFavorite, string | null>({
+            query: (page) => ({
+                url: `/popular?page=${page ?? '1'}`
             }),
             transformResponse: (response: MovieResponse): MovieResponseWithMovieFavorite => ({
                 ...response,
                 results: response
                     .results
                     .map((movie) => ({
-                        ...movie, isFavorite: false
+                        ...movie, isFavorite: localStorage.getItem(`movieId_${movie.id}`) !== null
                     }))
             }),
             providesTags: ['tmdbApi'],
         }),
-        fetchMoviesTopRated: build.query<MovieResponseWithMovieFavorite, void>({
-            query: () => ({
-                url: '/top_rated'
+        fetchMoviesTopRated: build.query<MovieResponseWithMovieFavorite, string | null>({
+            query: (page) => ({
+                url: `/top_rated?page=${page ?? '1'}`
             }),
             transformResponse: (response: MovieResponse): MovieResponseWithMovieFavorite => ({
                 ...response,
                 results: response
                     .results
                     .map((movie) => ({
-                        ...movie, isFavorite: false
+                        ...movie, isFavorite: localStorage.getItem(`movieId_${movie.id}`) !== null
                     }))
             }),
             providesTags: ['tmdbApi']
         }),
-        fetchMoviesUpcoming: build.query<MovieResponseWithMovieFavorite, void>({
-            query: () => ({
-                url: '/upcoming'
+        fetchMoviesUpcoming: build.query<MovieResponseWithMovieFavorite, string | null>({
+            query: (page) => ({
+                url: `/upcoming?page=${page ?? '1'}`
             }),
             transformResponse: (response: MovieResponse): MovieResponseWithMovieFavorite => ({
                 ...response,
                 results: response
                     .results
                     .map((movie) => ({
-                        ...movie, isFavorite: false
+                        ...movie, isFavorite: localStorage.getItem(`movieId_${movie.id}`) !== null
                     }))
             }),
             providesTags: ['tmdbApi']
         }),
-        fetchMoviesNowPlaying: build.query<MovieResponseWithMovieFavorite, void>({
-            query: () => ({
-                url: '/now_playing'
+        fetchMoviesNowPlaying: build.query<MovieResponseWithMovieFavorite, string | null>({
+            query: (page) => ({
+                url: `/now_playing?page=${page ?? '1'}`
             }),
             transformResponse: (response: MovieResponse): MovieResponseWithMovieFavorite => ({
                 ...response,
                 results: response
                     .results
                     .map((movie) => ({
-                        ...movie, isFavorite: false
+                        ...movie, isFavorite: localStorage.getItem(`movieId_${movie.id}`) !== null
                     }))
             }),
             providesTags: ['tmdbApi']
         }),
-        fetchMoviesSearch: build.query<MovieResponseWithMovieFavorite, FormDataSearch>({
-            query: ({query}) => ({
-                url: `https://api.themoviedb.org/3/search/movie?query=${query}`
+        fetchMoviesSearch: build.query<MovieResponseWithMovieFavorite, FormDataSearch & {
+            page?: number
+        }>({
+            query: ({query, page}) => ({
+                url: `https://api.themoviedb.org/3/search/movie?query=${query}&page=${page}`
             }),
             transformResponse: (response: MovieResponse): MovieResponseWithMovieFavorite => ({
                 ...response,
                 results: response
                     .results
                     .map((movie) => ({
-                        ...movie, isFavorite: false
+                        ...movie,
+                        isFavorite: localStorage.getItem(`movieId_${movie.id}`) !== null
                     }))
             }),
             providesTags: ['tmdbApi']
@@ -82,13 +85,17 @@ export const moviesApi = baseApi.injectEndpoints({
         fetchMoviesFiltered: build.query<MovieResponseWithMovieFavorite, FilmFilters | void>({
             query: (filters) => {
                 if (filters) {
-                    const {
-                        sort_by, vote_average_gte, vote_average_lte,
-                        page, primary_release_date, original_title, with_genres
-                    } = filters
-                    const params = new URLSearchParams()
-                    if (with_genres) params.append('with_genres', with_genres.toString())
-                    if (sort_by) params.append('sort_by', sort_by)
+                    const params = new URLSearchParams();
+                    if (filters.sort_by) params.append('sort_by', filters.sort_by);
+                    if (filters.vote_average_gte !== undefined) params.append('vote_average.gte', filters.vote_average_gte.toString());
+                    if (filters.vote_average_lte !== undefined) params.append('vote_average.lte', filters.vote_average_lte.toString());
+                    if (filters.primary_release_date) params.append('primary_release_date.gte', filters.primary_release_date);
+                    if (filters.original_title) params.append('original_title', filters.original_title);
+                    if (filters.with_genres) {
+                        const genres = Array.isArray(filters.with_genres as number[]) ? filters.with_genres.join(',') : filters.with_genres.toString();
+                        params.append('with_genres', genres);
+                    }
+                    if (filters.page) params.append('page', filters.page.toString());
 
                     return `https://api.themoviedb.org/3/discover/movie?${params.toString()}`
                 }
@@ -100,7 +107,7 @@ export const moviesApi = baseApi.injectEndpoints({
                 results: response
                     .results
                     .map((movie) => ({
-                        ...movie, isFavorite: false
+                        ...movie, isFavorite: localStorage.getItem(`movieId_${movie.id}`) !== null
                     }))
             }),
             providesTags: ['tmdbApi']

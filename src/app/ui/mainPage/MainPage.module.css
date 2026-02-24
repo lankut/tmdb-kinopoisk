@@ -3,11 +3,11 @@
     flex-direction: column;
 }
 
-
-
-
-
-
+.container_movies {
+    max-width: 1425px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .description {
     display: flex;

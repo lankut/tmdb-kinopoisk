@@ -9,15 +9,19 @@ import {
 import {Movies} from "@/common/components/Movies";
 import type {MovieResponseWithMovieFavorite} from "@/app/api/typesApi.ts";
 import {NavLink, useParams} from "react-router";
+import {useState} from "react";
 
 export const CategoryMovies = () => {
 
-    const {data: popularMovies} = useFetchMoviesPopularQuery()
-    const {data: topRatedMovies} = useFetchMoviesTopRatedQuery()
-    const {data: upcomingMovies} = useFetchMoviesUpcomingQuery()
-    const {data: nowPlayingMovies} = useFetchMoviesNowPlayingQuery()
-
+    const [page, setPage] = useState(1);
     const {category} = useParams()
+
+
+    const {data: popularMovies} = useFetchMoviesPopularQuery(page.toString(), {skip: category !== 'popular'});
+    const {data: topRatedMovies} = useFetchMoviesTopRatedQuery(page.toString(), {skip: category !== 'top_rated'})
+    const {data: upcomingMovies} = useFetchMoviesUpcomingQuery(page.toString(), {skip: category !== 'upcoming'});
+    const {data: nowPlayingMovies} = useFetchMoviesNowPlayingQuery(page.toString(), {skip: category !== 'now_playing'});
+
 
     const linkItems = [
         {title: 'Popular Movies', category: 'popular'},
@@ -28,6 +32,7 @@ export const CategoryMovies = () => {
 
     let moviesData: MovieResponseWithMovieFavorite | undefined;
     let queryKey: EndpointKeys
+    const titleCategory = linkItems.find(el => el.category === category)
 
     switch (category) {
         case 'top_rated':
@@ -59,11 +64,11 @@ export const CategoryMovies = () => {
             <div className={s.container_category}>
                 <Movies movies={moviesData} queryKey={queryKey}
                         showAll={true} showButton={false}
-                        widthImage={'210px'}
-
+                        widthImage={'210px'} setPage={setPage}
+                        page={page} title={titleCategory?.title}
+                        queryArgs={page.toString()}
                 />
             </div>
-
         </div>
     );
 };

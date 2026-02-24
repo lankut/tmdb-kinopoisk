@@ -9,8 +9,6 @@ export const MovieDetails = () => {
         skip: !movieId,
     });
 
-    console.log(data)
-
     return (
         <div className={s.wrapper}>
             <h2 className={s.h2}>Movie Details</h2>

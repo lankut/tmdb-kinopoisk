@@ -4,9 +4,9 @@ import s from './Navigation.module.css'
 
 const navItems = [
     {to: Path.MainPage, label: 'Main'},
-    {to: Path.CategoryMovies, label: 'Category Movies'},
+    {to: Path.CategoryMoviesDefault, label: 'Category Movies'},
     {to: Path.FilteredMovies, label: 'Filtered Movies'},
-    {to: Path.Search, label: 'SearchPage'},
+    {to: Path.Search, label: 'Search'},
     {to: Path.Favorites, label: 'Favorites'},
 ]
 

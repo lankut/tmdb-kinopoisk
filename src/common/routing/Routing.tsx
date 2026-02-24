@@ -10,7 +10,7 @@ import {MovieDetails} from "@/common/components/MovieDetails/MovieDetails.tsx";
 export const Path = {
     MainPage: '/',
     NotFound: '*',
-    CategoryMovies: '/category_movies/popular',
+    CategoryMoviesDefault: '/category_movies/popular',
     CheckCategoryMovies: '/category_movies/:category',
     FilteredMovies: '/filtered_movies',
     Search: '/SearchPage',
@@ -24,7 +24,6 @@ export const Routing = () => {
         <Routes>
             <Route path={Path.MainPage} element={<MainPage/>}/>
             <Route path={Path.NotFound} element={<PageNotFound/>}/>
-            <Route path={Path.CategoryMovies} element={<CategoryMovies/>}/>
             <Route path={Path.CheckCategoryMovies} element={<CategoryMovies/>}/>
             <Route path={Path.FilteredMovies} element={<FilteredMovies/>}/>
             <Route path={Path.Search} element={<SearchPage/>}/>
