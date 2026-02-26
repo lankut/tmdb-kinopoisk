@@ -1,0 +1,68 @@
+/* NotFoundPage.module.css */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+}
+
+.code {
+    font-size: 150px;
+    font-weight: bold;
+    margin: 0;
+    line-height: 1;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+    animation: glitch 1s infinite;
+}
+
+.title {
+    font-size: 32px;
+    margin: 20px 0 10px;
+    font-weight: 600;
+}
+
+.message {
+    font-size: 18px;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.button {
+    padding: 12px 32px;
+    font-size: 16px;
+    background: white;
+    color: #667eea;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes glitch {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(-5px);
+    }
+    40% {
+        transform: translateX(5px);
+    }
+    60% {
+        transform: translateX(-5px);
+    }
+    80% {
+        transform: translateX(5px);
+    }
+}
