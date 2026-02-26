@@ -5,6 +5,7 @@ import type {
     MovieResponseWithMovieFavorite
 } from "@/app/api/typesApi.ts";
 import type {FormDataSearch} from "@/common/types/types.ts";
+import type {MovieDetails} from "@/app/api/detailsTypes.ts";
 
 
 export const moviesApi = baseApi.injectEndpoints({
@@ -138,6 +139,12 @@ export const moviesApi = baseApi.injectEndpoints({
             }),
             providesTags: ['tmdbApi']
         }),
+        fetchMoviesDetails: build.query<MovieDetails, string>({
+            query: (movieId) => ({
+                url: `${movieId}`
+            }),
+            providesTags: ['tmdbApi']
+        }),
     })
 })
 
@@ -150,7 +157,8 @@ export const {
     useFetchMoviesSearchQuery,
     useFetchMoviesFilteredQuery,
     useFetchMoviesCreditsQuery,
-    useFetchMoviesSimilarQuery
+    useFetchMoviesSimilarQuery,
+    useFetchMoviesDetailsQuery
 } = moviesApi
 
 export type moviesApiType = typeof moviesApi;

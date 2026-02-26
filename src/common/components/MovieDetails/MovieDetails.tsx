@@ -1,9 +1,8 @@
 import {useNavigate, useParams} from "react-router";
-import {useFetchMoviesDetailsQuery} from "@/app/api/movieDetailsApi.ts";
 import s from './MovieDetails.module.css'
 import {getDate} from "@/common/utils/getDate.ts";
 import {
-    useFetchMoviesCreditsQuery,
+    useFetchMoviesCreditsQuery, useFetchMoviesDetailsQuery,
     useFetchMoviesSimilarQuery
 } from "@/app/api/moviesApi.ts";
 import {Movies} from "@/common/components/Movies";
