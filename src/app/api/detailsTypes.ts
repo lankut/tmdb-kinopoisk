@@ -24,7 +24,7 @@ type SpokenLanguage = {
 export type MovieDetails = {
     adult: boolean;
     backdrop_path: string;
-    belongs_to_collection: null | unknown; // если известен тип коллекции - замените unknown
+    belongs_to_collection: null | unknown;
     budget: number;
     genres: Genre[];
     homepage: string;
@@ -40,7 +40,7 @@ export type MovieDetails = {
     production_countries: ProductionCountry[];
     release_date: string;
     revenue: number;
-    runtime: number; // длительность в минутах
+    runtime: number;
     spoken_languages: SpokenLanguage[];
     status: string;
     tagline: string;
