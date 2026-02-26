@@ -7,13 +7,36 @@ import {
     useFetchMoviesTopRatedQuery,
     useFetchMoviesUpcomingQuery
 } from "@/app/api/moviesApi.ts";
+import {useEffect} from "react";
+import {setLoading} from "@/app/model/appSlice.ts";
+import {useAppDispatch} from "@/common/hooks";
 
 export const MainPage = () => {
 
-    const {data: popularMovies} = useFetchMoviesPopularQuery(null)
-    const {data: topRatedMovies} = useFetchMoviesTopRatedQuery(null)
-    const {data: upcomingMovies} = useFetchMoviesUpcomingQuery(null)
-    const {data: nowPlayingMovies} = useFetchMoviesNowPlayingQuery(null)
+    const dispatch = useAppDispatch();
+
+    const {
+        data: popularMovies,
+        isFetching: isFetchingPopular
+    } = useFetchMoviesPopularQuery(null)
+    const {
+        data: topRatedMovies,
+        isFetching: isFetchingTopRated
+    } = useFetchMoviesTopRatedQuery(null)
+    const {
+        data: upcomingMovies,
+        isFetching: isFetchingUpcoming
+    } = useFetchMoviesUpcomingQuery(null)
+    const {
+        data: nowPlayingMovies,
+        isFetching: isFetchingNowPlaying
+    } = useFetchMoviesNowPlayingQuery(null)
+
+    const isFetchingAny = isFetchingPopular || isFetchingTopRated || isFetchingUpcoming || isFetchingNowPlaying
+
+    useEffect(() => {
+        dispatch(setLoading(isFetchingAny))
+    }, [isFetchingAny, dispatch]);
 
     return (
         <div className={s.wrapper}>

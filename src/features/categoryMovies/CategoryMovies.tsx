@@ -9,19 +9,27 @@ import {
 import {Movies} from "@/common/components/Movies";
 import type {MovieResponseWithMovieFavorite} from "@/app/api/typesApi.ts";
 import {NavLink, useParams} from "react-router";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {setLoading} from "@/app/model/appSlice.ts";
+import {useAppDispatch} from "@/common/hooks";
 
 export const CategoryMovies = () => {
 
     const [page, setPage] = useState(1);
     const {category} = useParams()
 
+const dispatch = useAppDispatch();
 
-    const {data: popularMovies} = useFetchMoviesPopularQuery(page.toString(), {skip: category !== 'popular'});
-    const {data: topRatedMovies} = useFetchMoviesTopRatedQuery(page.toString(), {skip: category !== 'top_rated'})
-    const {data: upcomingMovies} = useFetchMoviesUpcomingQuery(page.toString(), {skip: category !== 'upcoming'});
-    const {data: nowPlayingMovies} = useFetchMoviesNowPlayingQuery(page.toString(), {skip: category !== 'now_playing'});
+    const {data: popularMovies, isFetching: isFetchingPopular} = useFetchMoviesPopularQuery(page.toString(), {skip: category !== 'popular'});
+    const {data: topRatedMovies, isFetching: isFetchingTopRated} = useFetchMoviesTopRatedQuery(page.toString(), {skip: category !== 'top_rated'})
+    const {data: upcomingMovies, isFetching: isFetchingUpcoming} = useFetchMoviesUpcomingQuery(page.toString(), {skip: category !== 'upcoming'});
+    const {data: nowPlayingMovies, isFetching: isFetchingNowPlaying} = useFetchMoviesNowPlayingQuery(page.toString(), {skip: category !== 'now_playing'});
 
+    const isFetchingAny = isFetchingPopular || isFetchingTopRated || isFetchingUpcoming || isFetchingNowPlaying
+
+    useEffect(() => {
+        dispatch(setLoading(isFetchingAny))
+    }, [isFetchingAny, dispatch]);
 
     const linkItems = [
         {title: 'Popular Movies', category: 'popular'},

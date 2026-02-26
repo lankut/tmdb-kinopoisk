@@ -2,8 +2,16 @@ import s from './FilteredMovies.module.css'
 import {RangeSlider} from "@/common/components/RangeSlider";
 import {useFetchMoviesFilteredQuery} from "@/app/api/moviesApi.ts";
 import type {FilmFilters} from "@/app/api/typesApi.ts";
-import {type ChangeEvent, useCallback, useRef, useState} from "react";
+import {
+    type ChangeEvent,
+    useCallback,
+    useEffect,
+    useRef,
+    useState
+} from "react";
 import {Movies} from "@/common/components/Movies";
+import {useAppDispatch} from "@/common/hooks";
+import {setLoading} from "@/app/model/appSlice.ts";
 
 type GenresType = {
     id: number,
@@ -26,7 +34,13 @@ export const FilteredMovies = () => {
 
     const [filters, setFilters] = useState<FilmFilters>(defaultFilters)
 
-    const {data} = useFetchMoviesFilteredQuery(filters)
+    const {data, isFetching} = useFetchMoviesFilteredQuery(filters)
+
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(setLoading(isFetching))
+    }, [isFetching, dispatch]);
 
     const resetDefault = defaultFilters
 

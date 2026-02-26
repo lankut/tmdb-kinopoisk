@@ -4,6 +4,7 @@ import type {FormDataSearch} from "@/common/types/types.ts";
 export type AppState = {
     searchData: FormDataSearch | undefined,
     theme: 'light' | 'dark',
+    isLoading: boolean,
 }
 
 export const appSlice = createSlice({
@@ -11,10 +12,12 @@ export const appSlice = createSlice({
     initialState: {
         searchData: undefined,
         theme: (localStorage.getItem('theme') as 'light' | 'dark') || 'light',
+        isLoading: false
     } as AppState,
     selectors: {
         selectSearchData: (state) => state.searchData,
-        selectTheme: (state)=>state.theme
+        selectTheme: (state) => state.theme,
+        selectIsLoading: (state)=> state.isLoading
     },
     // extraReducers: (builder) => {
     // },
@@ -29,15 +32,18 @@ export const appSlice = createSlice({
             state.theme = state.theme === 'light' ? 'dark' : 'light'
             document.documentElement.setAttribute('data-theme', state.theme)
             localStorage.setItem('theme', state.theme)
+        }),
+        setLoading: create.reducer((state, action: PayloadAction<boolean>) => {
+            state.isLoading = action.payload
         })
-
     })
 })
 export const {
     setSearchData,
     resetResultSearch,
     toggleTheme,
+    setLoading,
 } = appSlice.actions;
-export const {selectSearchData, selectTheme} = appSlice.selectors
+export const {selectSearchData, selectTheme, selectIsLoading} = appSlice.selectors
 export const appReducer = appSlice.reducer
 
