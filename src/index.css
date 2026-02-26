@@ -2,9 +2,22 @@
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
     --primary-color: rgb(3, 37, 65);;
     --selected-color: rgb(212, 175, 55);;
+
+    --bg-color: #ffffff;
+    --text-color: #000000;
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
+}
+
+[data-theme='dark'] {
+    --bg-color: #1a1a1a;
+    --text-color: #ffffff;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }

@@ -1,6 +1,6 @@
 import {baseApi} from "@/app/api/baseApi.ts";
 import type {
-    FilmFilters,
+    FilmFilters, MovieCredits,
     MovieResponse,
     MovieResponseWithMovieFavorite
 } from "@/app/api/typesApi.ts";
@@ -18,7 +18,8 @@ export const moviesApi = baseApi.injectEndpoints({
                 results: response
                     .results
                     .map((movie) => ({
-                        ...movie, isFavorite: localStorage.getItem(`movieId_${movie.id}`) !== null
+                        ...movie,
+                        isFavorite: localStorage.getItem(`movieId_${movie.id}`) !== null
                     }))
             }),
             providesTags: ['tmdbApi'],
@@ -32,7 +33,8 @@ export const moviesApi = baseApi.injectEndpoints({
                 results: response
                     .results
                     .map((movie) => ({
-                        ...movie, isFavorite: localStorage.getItem(`movieId_${movie.id}`) !== null
+                        ...movie,
+                        isFavorite: localStorage.getItem(`movieId_${movie.id}`) !== null
                     }))
             }),
             providesTags: ['tmdbApi']
@@ -46,7 +48,8 @@ export const moviesApi = baseApi.injectEndpoints({
                 results: response
                     .results
                     .map((movie) => ({
-                        ...movie, isFavorite: localStorage.getItem(`movieId_${movie.id}`) !== null
+                        ...movie,
+                        isFavorite: localStorage.getItem(`movieId_${movie.id}`) !== null
                     }))
             }),
             providesTags: ['tmdbApi']
@@ -60,7 +63,8 @@ export const moviesApi = baseApi.injectEndpoints({
                 results: response
                     .results
                     .map((movie) => ({
-                        ...movie, isFavorite: localStorage.getItem(`movieId_${movie.id}`) !== null
+                        ...movie,
+                        isFavorite: localStorage.getItem(`movieId_${movie.id}`) !== null
                     }))
             }),
             providesTags: ['tmdbApi']
@@ -107,12 +111,33 @@ export const moviesApi = baseApi.injectEndpoints({
                 results: response
                     .results
                     .map((movie) => ({
-                        ...movie, isFavorite: localStorage.getItem(`movieId_${movie.id}`) !== null
+                        ...movie,
+                        isFavorite: localStorage.getItem(`movieId_${movie.id}`) !== null
                     }))
             }),
             providesTags: ['tmdbApi']
         }),
-
+        fetchMoviesCredits: build.query<MovieCredits, string>({
+            query: (movieId) => ({
+                url: `https://api.themoviedb.org/3/movie/${movieId}/credits`
+            }),
+            providesTags: ['tmdbApi']
+        }),
+        fetchMoviesSimilar: build.query<MovieResponseWithMovieFavorite, string>({
+            query: (movieId) => ({
+                url: `https://api.themoviedb.org/3/movie/${movieId}/similar`
+            }),
+            transformResponse: (response: MovieResponse): MovieResponseWithMovieFavorite => ({
+                ...response,
+                results: response
+                    .results
+                    .map((movie) => ({
+                        ...movie,
+                        isFavorite: localStorage.getItem(`movieId_${movie.id}`) !== null
+                    }))
+            }),
+            providesTags: ['tmdbApi']
+        }),
     })
 })
 
@@ -123,7 +148,9 @@ export const {
     useFetchMoviesUpcomingQuery,
     useFetchMoviesNowPlayingQuery,
     useFetchMoviesSearchQuery,
-    useFetchMoviesFilteredQuery
+    useFetchMoviesFilteredQuery,
+    useFetchMoviesCreditsQuery,
+    useFetchMoviesSimilarQuery
 } = moviesApi
 
 export type moviesApiType = typeof moviesApi;

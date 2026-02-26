@@ -1,17 +1,19 @@
 import {useNavigate} from 'react-router'
 import s from './Favorites.module.css'
-import {getPercentAndColor} from "@/common/utils/getPercentAndColor.ts";
 import {noPosterAvailable} from "@/common/constants/constants.ts";
 import {getFavoriteMovies} from "@/common/utils/getFavoriteMovies.ts";
+import {Button} from "@/common/components/Button";
+import {useState} from "react";
 
 export const Favorites = () => {
-    const favorites = getFavoriteMovies();
+
     const navigate = useNavigate()
 
+    const [favorites, setFavorite] = useState(getFavoriteMovies())
 
     const removeFavorite = (movieId: number) => {
         localStorage.removeItem(`movieId_${movieId}`)
-        window.location.reload()
+        setFavorite(getFavoriteMovies())
     }
 
     if (favorites.length === 0) {
@@ -19,39 +21,27 @@ export const Favorites = () => {
     }
 
     return (
-        <div className={s.wrapper}>
+        <div>
             <h2 className={s.title}>My Favorites</h2>
-            <div className={s.grid}>
+            <div className={s.wrapper}>
+
                 {favorites.map((movie) => {
-                    const {
-                        percent,
-                        backgroundColor
-                    } = getPercentAndColor(movie.voteAverage)
 
                     return (
-                        <div key={movie.movieId} className={s.card}>
-                            <img
-                                className={s.poster}
-                                src={movie.posterUrl
-                                    ? `${import.meta.env.VITE_IMAGE_URL}${movie.posterUrl}`
-                                    : noPosterAvailable
-                                }
-                                alt={movie.title}
-                                onClick={() => navigate(`/details/${movie.movieId}`)}
+                        <div className={s.container} key={movie.movieId}>
+                            <img className={s.image}
+                                 src={movie.posterUrl
+                                     ? `${import.meta.env.VITE_IMAGE_URL}${movie.posterUrl}`
+                                     : noPosterAvailable
+                                 }
+                                 alt={movie.title}
+                                 onClick={() => navigate(`/details/${movie.movieId}`)}
                             />
                             <div className={s.title_movie}>{movie.title}</div>
-                            <span
-                                style={{backgroundColor}}
-                                className={s.badge}
-                            >
-                                {percent}%
-                            </span>
-                            <button
-                                className={s.removeButton}
+                            <span>Rating: {movie.voteAverage.toFixed(1)}</span>
+                            <Button
                                 onClick={() => removeFavorite(movie.movieId)}
-                            >
-                                ❌
-                            </button>
+                                title={'Remove'}/>
                         </div>
                     )
                 })}

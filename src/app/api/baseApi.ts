@@ -5,13 +5,9 @@ export const baseApi = createApi({
     tagTypes: ['tmdbApi'],
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_BASE_URL,
-        // headers: {
-        //     'API-KEY': import.meta.env.VITE_API_KEY,
-        // },
-        prepareHeaders: headers => {
-            headers.set("Authorization", `Bearer ${import.meta.env.VITE_API_KEY}`);
-            return headers;
-        }
+        headers: {
+            'Authorization': `Bearer ${import.meta.env.VITE_API_KEY}`
+        },
     }),
     endpoints: () => ({}),
 })

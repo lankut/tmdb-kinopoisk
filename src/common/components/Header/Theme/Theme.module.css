@@ -1,0 +1,12 @@
+.items {
+    color: white;
+    display: flex;
+    gap: 10px;
+    font-weight: 500;
+    margin-left: 60px;
+}
+
+.button {
+    background-color: var(--primary-color);
+    border: none;
+}

@@ -17,6 +17,7 @@ import type {FormDataSearch} from "@/common/types/types.ts";
 type Props = {
     movies: MovieResponseWithMovieFavorite | undefined
     queryKey: EndpointKeys
+    queryArgs: null | string | FilmFilters | undefined | FormDataSearch
     title?: string
     showButton?: boolean
     showAll?: boolean
@@ -27,7 +28,7 @@ type Props = {
     page?: number
     filters?: FilmFilters
     setFilters?: (filters: FilmFilters) => void
-    queryArgs: null | string | FilmFilters | undefined | FormDataSearch
+
 };
 
 export const Movies = ({
@@ -63,9 +64,11 @@ export const Movies = ({
     }) => {
         dispatch(
             moviesApi.util.updateQueryData(queryKey, queryArgs, (draft) => {
-                const movie = draft.results.find((movie: MovieWithFavorite) => movie.id === favorite.movieId);
-                if (movie) {
-                    movie.isFavorite = !movie.isFavorite;
+                if ('results' in draft) {
+                    const movie = draft.results.find((movie: MovieWithFavorite) => movie.id === favorite.movieId);
+                    if (movie) {
+                        movie.isFavorite = !movie.isFavorite;
+                    }
                 }
             })
         );
@@ -132,7 +135,8 @@ export const Movies = ({
                                     posterUrl: movie.poster_path,
                                     voteAverage: movie.vote_average
                                 })}>
-                                <span className={s.heartIcon}>{movie.isFavorite ? '❤️' : '🤍'}</span>
+                                <span
+                                    className={s.heartIcon}>{movie.isFavorite ? '❤️' : '🤍'}</span>
                             </button>
                         </div>
                     }
